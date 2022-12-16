@@ -3,7 +3,7 @@
 	class AlumnosM extends ConexionBD {
 		//REGISTRAR PRESTAMOS
 		static public function RegistrarAlumnosM($datosC, $tablaBD){
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare('INSERT INTO alumno (no_control, "nombreAlum", "apellidoPatAlum", "apellidoMatAlum", "fechaNacAlum", "calleCasaAlum", "numCasaAlum", "sexoAlum", "carreraAlum", "semestreAlum") VALUES (:NoControl,:nombreAlum,:apellidoPat,:apellidoMat,:fechaNac,:calleCasa,:numCasa,:sexo,:carrera,:semestre)');//el prepare solicita la sentencia sql
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("INSERT INTO $tablaBD (no_control, nombreAlum, apellidoPatAlum, apellidoMatAlum, fechaNacAlum, CalleCasaAlum, NumCasaAlum, sexoAlum, carreraAlum, semestreAlum) VALUES (:NoControl,:nombreAlum,:apellidoPat,:apellidoMat,:fechaNac,:calleCasa,:numCasa,:sexo,:carrera,:semestre)");//el prepare solicita la sentencia sql
 			$pdo ->bindParam(":NoControl", $datosC["NoControl"],PDO::PARAM_INT);
 			$pdo ->bindParam(":nombreAlum", $datosC["nombreAlum"],PDO::PARAM_STR);
 			$pdo ->bindParam(":apellidoPat", $datosC["apellidoPat"],PDO::PARAM_STR);
@@ -23,16 +23,15 @@
 			$pdo -> close();
 		}
 		//MOSTRAR PRESTAMOS
-		static public function MostrarAlumnosM(){	
-			$sql = 'SELECT * FROM alumno';
-			$sentencia = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare($sql);
-			$sentencia->execute();
-			return $sentencia->fetchAll();
+		static public function MostrarAlumnosM($tablaBD){
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("SELECT * FROM $tablaBD");
+			$pdo -> execute();
+			return $pdo -> fetchAll();
 			$pdo -> close();
 		}
 		//EDITAR PRESTAMOS
 		static public function EditarAlumnosM($datosC, $tablaBD){
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("SELECT * FROM $tablaBD WHERE no_control = :no_control");
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("SELECT no_control,nombreAlum,apellidoPatAlum,apellidoMatAlum,fechaNacAlum,CalleCasaAlum,NumCasaAlum,sexoAlum,carreraAlum,semestreAlum FROM $tablaBD WHERE no_control = :no_control");
 			$pdo -> bindParam(":no_control", $datosC, PDO::PARAM_INT);
 			$pdo -> execute();
 			return $pdo -> fetch();
@@ -41,7 +40,7 @@
 		//ACTUALIZAR PRESTAMOS
 		static public function ActualizarAlumnosM($datosC, $tablaBD){
 
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare('UPDATE alumno SET no_control = :no_control, "nombreAlum" = :nombreAlum, "apellidoPatAlum" = :apellidoPatAlum, "apellidoMatAlum" = :apellidoMatAlum, "fechaNacAlum" = :fechaNacAlum, "calleCasaAlum" = :CalleCasaAlum, "numCasaAlum" = :NumCasaAlum, "sexoAlum" = :sexoAlum, "carreraAlum" = :carreraAlum, "semestreAlum" = :semestreAlum WHERE no_control = :no_control');
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("UPDATE $tablaBD SET no_control = :no_control, nombreAlum = :nombreAlum, apellidoPatAlum = :apellidoPatAlum, apellidoMatAlum = :apellidoMatAlum, fechaNacAlum = :fechaNacAlum, CalleCasaAlum = :CalleCasaAlum, NumCasaAlum = :NumCasaAlum, sexoAlum = :sexoAlum, carreraAlum = :carreraAlum, semestreAlum = :semestreAlum WHERE no_control = :no_control");
 			
 			$pdo ->bindParam(":no_control", $datosC["no_control"], PDO::PARAM_INT);
 			$pdo ->bindParam(":nombreAlum", $datosC["nombreAlum"], PDO::PARAM_STR);

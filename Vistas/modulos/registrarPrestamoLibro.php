@@ -20,7 +20,7 @@
 
 		<input type="text" placeholder="Observaciones" name="ObservacionesR" >
 		
-		<input type="number" placeholder="IdLibro" name="IdLibroR" required>		
+		<input type="text" placeholder="IdLibro" name="IdLibroR" required>		
 
 		<input type="number" placeholder="NoControl" name="NoControlR" required>
 

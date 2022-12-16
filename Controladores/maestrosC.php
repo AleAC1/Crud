@@ -3,8 +3,9 @@
 		//REGISTRAR LOS MAESTROS
 		public function RegistrarMaestrosC(){//es igaul a RegistrarEmpleadosC
 			if(isset($_POST["RFCR"])){
-				$datosC = array("rfc"=>$_POST["RFCR"],"nombreM"=>$_POST["NombreMR"], "apellidoMP"=>$_POST["ApellidoMPR"], "apellidoMM"=>$_POST["ApellidoMMR"], "FechaNacM"=>$_POST["FechaNacMR"],"estadocivilMaestro"=>$_POST["EstadoCivil"],"sexoMaestro"=>$_POST["Sexo"],"areaSensei"=>$_POST["AreaSenseiR"],"curpMaestro"=>$_POST["CurpMaestroR"],"nivelEstudioMaestro"=>$_POST["NivelDeEstudioMaestroR"]);				
-				$respuesta = MaestrosM::RegistrarMaestrosM($datosC);
+				$datosC = array("rfc"=>$_POST["RFCR"],"nombreM"=>$_POST["NombreMR"], "apellidoMP"=>$_POST["ApellidoMPR"], "apellidoMM"=>$_POST["ApellidoMMR"], "FechaNacM"=>$_POST["FechaNacMR"],"estadocivilMaestro"=>$_POST["EstadoCivil"],"sexoMaestro"=>$_POST["Sexo"],"areaSensei"=>$_POST["AreaSenseiR"],"curpMaestro"=>$_POST["CurpMaestroR"],"nivelEstudioMaestro"=>$_POST["NivelDeEstudioMaestroR"]);
+				$tablaBD = "maestros";//la tabla a la que se le agragaran los usuarios
+				$respuesta = MaestrosM::RegistrarMaestrosM($datosC, $tablaBD);
 				if($respuesta == "Bien"){
 					header("location:index.php?ruta=maestros");
 				}else{
@@ -20,13 +21,13 @@
 			foreach ($respuesta as $key => $value) {
 				echo '<tr>
 				<td>'.$value["rfc"].'</td>
-				<td>'.$value["nombreMaestro"].'</td>
-				<td>'.$value["apellidoPMaestro"].'</td>
-				<td>'.$value["apellidoMMaestro"].'</td>
-				<td>'.$value["fechaNacMaestro"].'</td>
-				<td>'.$value["estadoCivilMaestro"].'</td>
+				<td>'.$value["nombreM"].'</td>
+				<td>'.$value["apellidoMP"].'</td>
+				<td>'.$value["apellidoMM"].'</td>
+				<td>'.$value["FechaNacM"].'</td>
+				<td>'.$value["estadocivilMaestro"].'</td>
 				<td>'.$value["sexoMaestro"].'</td>
-				<td>'.$value["areaMaestro"].'</td>
+				<td>'.$value["AreaMaestro"].'</td>
 				<td>'.$value["curpMaestro"].'</td>
 				<td>'.$value["nivelEstudioMaestro"].'</td>
 				<td><a href="index.php?ruta=editarmaestros&id='.$value["rfc"].'"><button>Editar</button></a></td>
@@ -44,21 +45,21 @@
 				
 				<input type="hidden" placeholder="RFC" value="'.$respuesta["rfc"].'" name="rfcE">
 
-				<input type="text" placeholder="nombreM" value="'.$respuesta["nombreMaestro"].'" name="nombreME" required>
+				<input type="text" placeholder="nombreM" value="'.$respuesta["nombreM"].'" name="nombreME" required>
 
-				<input type="text" placeholder="apellidoMP" value="'.$respuesta["apellidoPMaestro"].'" name="apellidoMPE" required>
+				<input type="text" placeholder="apellidoMP" value="'.$respuesta["apellidoMP"].'" name="apellidoMPE" required>
 
-				<input type="text" placeholder="apellidoMM" value="'.$respuesta["apellidoMMaestro"].'" name="apellidoMME" required>
+				<input type="text" placeholder="apellidoMM" value="'.$respuesta["apellidoMM"].'" name="apellidoMME" required>
 
-				<input type="date" placeholder="FechaNacM" value="'.$respuesta["fechaNacMaestro"].'" name="FechaNacME" required>
+				<input type="date" placeholder="FechaNacM" value="'.$respuesta["FechaNacM"].'" name="FechaNacME" required>
 
 						 <p>  
             EstadoCivil: 
         <select name="EstadoCivil">
-            <option ';if($respuesta["estadoCivilMaestro"]=="Soltero(a)"){echo 'selected';}echo'>Soltero(a)</option>
-            <option ';if($respuesta["estadoCivilMaestro"]=="Viudo(a)"){echo 'selected';}echo'>Viudo(a)</option>
-            <option ';if($respuesta["estadoCivilMaestro"]=="Casado(a)"){echo 'selected';}echo'>Casado(a)</option>
-            <option ';if($respuesta["estadoCivilMaestro"]=="Divorciado(a)"){echo 'selected';}echo'>Divorciado(a)</option>
+            <option ';if($respuesta["estadocivilMaestro"]=="Soltero(a)"){echo 'selected';}echo'>Soltero(a)</option>
+            <option ';if($respuesta["estadocivilMaestro"]=="Viudo(a)"){echo 'selected';}echo'>Viudo(a)</option>
+            <option ';if($respuesta["estadocivilMaestro"]=="Casado(a)"){echo 'selected';}echo'>Casado(a)</option>
+            <option ';if($respuesta["estadocivilMaestro"]=="Divorciado(a)"){echo 'selected';}echo'>Divorciado(a)</option>
         </select>
         </p>
 
@@ -70,7 +71,7 @@
         </select>
         </p>
 
-				<input type="text" placeholder="AreaMaestro" value="'.$respuesta["areaMaestro"].'" name="areaSenseiE" required>
+				<input type="text" placeholder="AreaMaestro" value="'.$respuesta["AreaMaestro"].'" name="areaSenseiE" required>
 
 				<input type="text" placeholder="curpMaestro" value="'.$respuesta["curpMaestro"].'" name="curpMaestroE" required>
 

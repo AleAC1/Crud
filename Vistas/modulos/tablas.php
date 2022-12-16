@@ -21,7 +21,7 @@
 		echo '
 			<h1>Seleccione una tabla a mostrar:</h1>
 			<ul>
-				<li><a href="index.php?ruta=prestamoLibro">LibrosPrestados</a></li>
+				<li><a href="index.php?ruta=prestamos">Prestamos</a></li>
 				<li><a href="index.php?ruta=multas">Multas</a></li>
 			</ul>'; 
 	}

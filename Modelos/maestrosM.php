@@ -2,8 +2,8 @@
 	require_once "conexionBD.php";
 	class MaestrosM extends ConexionBD {
 		//REGISTRAR MAESTROS
-		static public function RegistrarMaestrosM($datosC){
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare('INSERT INTO maestros (rfc, "nombreMaestro", "apellidoPMaestro", "apellidoMMaestro", "fechaNacMaestro", "estadoCivilMaestro", "sexoMaestro", "areaMaestro", "curpMaestro", "nivelEstudioMaestro") VALUES (:rfc, :nombreM, :apellidoMP, :apellidoMM, :FechaNacM, :estadocivilMaestro, :sexoMaestro, :areaSensei, :curpMaestro, :nivelEstudioMaestro)');
+		static public function RegistrarMaestrosM($datosC, $tablaBD){
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("INSERT INTO $tablaBD (rfc, nombreM, apellidoMP, apellidoMM, FechaNacM, estadocivilMaestro, sexoMaestro, AreaMaestro, curpMaestro, nivelEstudioMaestro) VALUES (:rfc, :nombreM, :apellidoMP, :apellidoMM, :FechaNacM, :estadocivilMaestro, :sexoMaestro, :areaSensei, :curpMaestro, :nivelEstudioMaestro)");
 			$pdo ->bindParam(":rfc", $datosC["rfc"],PDO::PARAM_STR);
 			$pdo ->bindParam(":nombreM", $datosC["nombreM"],PDO::PARAM_STR);
 			$pdo ->bindParam(":apellidoMP", $datosC["apellidoMP"],PDO::PARAM_STR);
@@ -30,17 +30,18 @@
 			$pdo -> close();
 		}
 		//EDITAR MAESTROS
-		static public function EditarMaestrosM($datosC){
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("SELECT * FROM maestros WHERE rfc = :rfc");
+		static public function EditarMaestrosM($datosC, $tablaBD){
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("SELECT * FROM $tablaBD WHERE rfc = :rfc");
 			$pdo -> bindParam(":rfc", $datosC, PDO::PARAM_STR);
 			$pdo -> execute();
 			return $pdo -> fetch();
 			$pdo -> close();
 		}
 		//ACTUALIZAR PRESTAMOS
-		static public function ActualizarMaestrosM($datosC){
+		static public function ActualizarMaestrosM($datosC, $tablaBD){
 
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare('UPDATE maestros SET rfc = :rfc, "nombreMaestro" = :nombreM, "apellidoPMaestro" = :apellidoMP, "apellidoMMaestro" = :apellidoMM, "fechaNacMaestro" = :FechaNacM, "estadoCivilMaestro" = :estadocivilMaestro, "sexoMaestro" = :sexoMaestro, "areaMaestro" = :areaSensei, "curpMaestro" = :curpMaestro, "nivelEstudioMaestro" = :nivelEstudioMaestro  WHERE rfc = :rfc');
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("UPDATE $tablaBD SET rfc = :rfc, nombreM = :nombreM, apellidoMP = :apellidoMP, apellidoMM = :apellidoMM, FechaNacM = :FechaNacM, estadocivilMaestro = :estadocivilMaestro, sexoMaestro = :sexoMaestro, AreaMaestro = :areaSensei, curpMaestro = :curpMaestro, nivelEstudioMaestro = :nivelEstudioMaestro  WHERE rfc = :rfc");
+
 			
 			$pdo ->bindParam(":rfc", $datosC["rfc"],PDO::PARAM_STR);
 			$pdo ->bindParam(":nombreM", $datosC["nombreM"],PDO::PARAM_STR);
@@ -64,7 +65,7 @@
 		//BORAR MAESTROS
 		static public function BorrarMaestrosM($datosC, $tablaBD){
 			
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("DELETE FROM maestros WHERE rfc = :rfc" );
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("DELETE FROM $tablaBD WHERE rfc = :rfc" );
 			$pdo -> bindParam(":rfc", $datosC, PDO::PARAM_STR);
 
 			if($pdo -> execute()){

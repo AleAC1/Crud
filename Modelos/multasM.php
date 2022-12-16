@@ -18,7 +18,7 @@
 		}
 		//MOSTRAR PRESTAMOS
 		static public function MostrarMultasM($tablaBD){
-			@$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("SELECT * FROM $tablaBD");
+			@$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("SELECT id_prestamo, cantidad_multa, estado_multa FROM $tablaBD");
 			$pdo -> execute();
 			return $pdo -> fetchAll();
 			$pdo -> close();

@@ -26,9 +26,9 @@
 						echo '
 						<tr>
 						<td>'.$value["id_prestamo"].'</td>
-						<td>'.$value["fechaPrestamo"].'</td>
-						<td>'.$value["fechaDevolucion"].'</td>
-						<td>'.$value["estadoDevuelto"].'</td>
+						<td>'.$value["fecha_prestamo"].'</td>
+						<td>'.$value["fecha_devolucion"].'</td>
+						<td>'.$value["estado_de_volucion"].'</td>
 						<td>'.$value["observaciones"].'</td>
 						<td>'.$valorLibro["id_libro"].'</td>
 						<td>'.$valorControl["no_control"].'</td>
@@ -53,17 +53,17 @@
 				
 				<input type="hidden" placeholder="IdPrestamo" value="'.$respuesta["id_prestamo"].'" name="IdPrestamoE">
 
-				<input type="date" placeholder="FechaPrestamo" value="'.$respuesta["fechaPrestamo"].'" name="FechaPrestamoE" required>
+				<input type="date" placeholder="FechaPrestamo" value="'.$respuesta["fecha_prestamo"].'" name="FechaPrestamoE" required>
 
-				<input type="date" placeholder="FechaDevolucion" value="'.$respuesta["fechaDevolucion"].'" name="FechaDevolucionE" required>
+				<input type="date" placeholder="FechaDevolucion" value="'.$respuesta["fecha_devolucion"].'" name="FechaDevolucionE" required>
 
-				<input type="number" placeholder="EstadoDevolucion" value="'.$respuesta["estadoDevuelto"].'" name="EstadoDevolucionE" required>
+				<input type="number" placeholder="EstadoDevolucion" value="'.$respuesta["estado_de_volucion"].'" name="EstadoDevolucionE" required>
 
 				<input type="text" placeholder="Observaciones" value="'.$respuesta["observaciones"].'" name="ObservacionesE">
 
-				<input type="number" placeholder="IdLibro" value="'.$libro["id_libro"].'" name="IdLibroE">
+				<input type="text" placeholder="IdLibro" value="'.$libro["id_libro"].'" name="IdLibroE">
 				
-				<input type="number" placeholder="no_Control" value="'.$control["no_control"].'"name="NoControlE">
+				<input type="text" placeholder="no_Control" value="'.$control["no_control"].'"name="NoControlE">
 
 				<input type="submit" value="Actualizar">';
 		}

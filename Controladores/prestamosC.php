@@ -3,7 +3,7 @@
 		//REGISTRAR LOS PRESTAMOS
 		public function RegistrarPrestamosC(){//es igaul a RegistrarEmpleadosC
 			if(isset($_POST["FechaPrestamoR"])){
-				$datosC = array("id_prestamo"=>$_POST["id_prestamoR"],"FechaPrestamo"=>$_POST["FechaPrestamoR"],"FechaDevolucion"=>$_POST["FechaDevolucionR"], "EstadoDevolucion"=>$_POST["EstadoDevolucionR"], "Observaciones"=>$_POST["ObservacionesR"]);
+				$datosC = array("FechaPrestamo"=>$_POST["FechaPrestamoR"],"FechaDevolucion"=>$_POST["FechaDevolucionR"], "EstadoDevolucion"=>$_POST["EstadoDevolucionR"], "Observaciones"=>$_POST["ObservacionesR"]);
 				$tablaBD = "prestamo";//la tabla a la que se le agragaran los usuarios
 				$respuesta = prestamosM::RegistrarPrestamosM($datosC, $tablaBD);
 				if($respuesta == "Bien"){
@@ -11,6 +11,7 @@
 				}else{
 					echo "ERROR";
 				}
+
 			}
 		}
 		//MOSTRAR LOS PRESTAMOS
@@ -20,9 +21,9 @@
 			foreach ($respuesta as $key => $value) {
 				echo '<tr>
 				<td>'.$value["id_prestamo"].'</td>
-				<td>'.$value["fechaPrestamo"].'</td>
-				<td>'.$value["fechaDevolucion"].'</td>
-				<td>'.$value["estadoDevuelto"].'</td>
+				<td>'.$value["fecha_prestamo"].'</td>
+				<td>'.$value["fecha_devolucion"].'</td>
+				<td>'.$value["estado_de_volucion"].'</td>
 				<td>'.$value["observaciones"].'</td>
 				<td><a href="index.php?ruta=editar&id='.$value["id_prestamo"].'"><button>Editar</button></a></td>
 				<td><a href="index.php?ruta=prestamos&idB='.$value["id_prestamo"].'"><button>Borrar</button></a></td>
@@ -39,11 +40,11 @@
 				
 				<input type="hidden" placeholder="IdPrestamo" value="'.$respuesta["id_prestamo"].'" name="IdPrestamoE">
 
-				<input type="date" placeholder="FechaPrestamo" value="'.$respuesta["fechaPrestamo"].'" name="FechaPrestamoE" required>
+				<input type="date" placeholder="FechaPrestamo" value="'.$respuesta["fecha_prestamo"].'" name="FechaPrestamoE" required>
 
-				<input type="date" placeholder="FechaDevolucion" value="'.$respuesta["fechaDevolucion"].'" name="FechaDevolucionE" required>
+				<input type="date" placeholder="FechaDevolucion" value="'.$respuesta["fecha_devolucion"].'" name="FechaDevolucionE" required>
 
-				<input type="number" placeholder="EstadoDevolucion" value="'.$respuesta["estadoDevuelto"].'" name="EstadoDevolucionE" required>
+				<input type="number" placeholder="EstadoDevolucion" value="'.$respuesta["estado_de_volucion"].'" name="EstadoDevolucionE" required>
 
 				<input type="text" placeholder="Observaciones" value="'.$respuesta["observaciones"].'" name="ObservacionesE">
 

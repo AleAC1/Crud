@@ -10,13 +10,6 @@
 		<input type="submit" value="Ingresar">
 
 </form>
-
-<br><br><br>
-usuario: administrador <br>
-contraseña: admin
-<br><br><br>
-usuario: bibliotecario <br>
-contraseña: 1234
 <?php
 	$ingreso = new AdminC();
 	$ingreso -> IngresoC();

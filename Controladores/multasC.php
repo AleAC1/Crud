@@ -4,7 +4,7 @@
 		public function RegistrarMultasC(){
 			if(isset($_POST["IdPrestamoR"])){
 				$datosC = array("IdPrestamo"=>$_POST["IdPrestamoR"],"CantidadMulta"=>$_POST["CantidadMultaR"], "EstadoMulta"=>$_POST["EstadoMultaR"]);
-				$tablaBD = "multa";//la tabla a la que se le agragaran las multas
+				$tablaBD = "multas";//la tabla a la que se le agragaran las multas
 				$respuesta = MultasM::RegistrarMultasM($datosC, $tablaBD);
 				if($respuesta == "Bien"){
 					header("location:index.php?ruta=multas");
@@ -15,7 +15,7 @@
 		}
 		//MOSTRAR LOS PRESTAMOS
 		public function MostrarMultasC(){
-			$tablaBD = "multa";
+			$tablaBD = "multas";
 			$respuesta =  MultasM::MostrarMultasM($tablaBD);
 			foreach ($respuesta as $key => $value) {
 				echo '<tr>
@@ -30,7 +30,7 @@
 		//EDITAR PRESTAMOS
 		public function EditarMultasC(){
 			$datosC = $_GET["id"];
-			$tablaBD = "multa";
+			$tablaBD = "multas";
 			$respuesta = MultasM::EditarMultasM($datosC, $tablaBD); 
 			//<input type="hidden" name="IdPrestamoE">
 			echo '
@@ -50,7 +50,7 @@
 				$datosC =  array("id_prestamo"=>$_POST["IdMultaE"],"cantidad_multa"=>$_POST["CantidadMultaE"],
 				"estado_multa"=>$_POST["EstadoMultaE"]);
 
-				$tablaBD = "multa";
+				$tablaBD = "multas";
 				$respuesta = MultasM::ActualizarMultasM($datosC, $tablaBD);
 				if($respuesta == "Bien"){
 					header("location:index.php?ruta=multas");
@@ -63,7 +63,7 @@
 		public function BorrarMultasC(){
 			if (isset($_GET["idB"])) {
 				$datosC = $_GET["idB"];
-				$tablaBD = "multa";
+				$tablaBD = "multas";
 				$respuesta = MultasM::BorrarMultasM($datosC, $tablaBD);
 
 				if($respuesta == "Bien"){

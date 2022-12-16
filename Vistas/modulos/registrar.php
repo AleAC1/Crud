@@ -10,8 +10,6 @@
 
 	<form method="post">
 
-		<input type="int" placeholder="IdPrestamo" name="id_prestamoR" required>
-
 		<input type="date" placeholder="FechaPrestamo" name="FechaPrestamoR" required>
 
 		<input type="date" placeholder="FechaDevolucion" name="FechaDevolucionR" required>

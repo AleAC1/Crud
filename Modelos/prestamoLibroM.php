@@ -3,7 +3,7 @@
 	class PrestamoLibroM extends ConexionBD {
 		//REGISTRAR PRESTAMOS
 		static public function RegistrarPrestamoLibroM($datosC){
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("CALL registrarprestamos(:IdPrestamo, :FechaPrestamo, :FechaDevolucion, :EstadoDevolucion, :Observaciones, :IdLibro, :NoControl)");//el prepare solicita la sentencia sql
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("CALL Prestamo_de_librosConAlumnos(:IdPrestamo, :FechaPrestamo, :FechaDevolucion, :EstadoDevolucion, :Observaciones, :IdLibro, :NoControl)");//el prepare solicita la sentencia sql
 			$pdo ->bindParam(":IdPrestamo", $datosC["IdPrestamo"],PDO::PARAM_INT);
 			$pdo ->bindParam(":FechaPrestamo", $datosC["FechaPrestamo"],PDO::PARAM_STR);
 			$pdo ->bindParam(":FechaDevolucion", $datosC["FechaDevolucion"],PDO::PARAM_STR);
@@ -46,11 +46,9 @@
 		//ACTUALIZAR PRESTAMOS
 		static public function ActualizarPrestamoLibroM($datosC, $tablaBD){
 
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare('UPDATE prestamo SET id_prestamo = :id_prestamo, "fechaPrestamo" = :fecha_prestamo, "fechaDevolucion" = :fecha_devolucion, "estadoDevuelto" = :estado_de_volucion, observaciones = :observaciones WHERE id_prestamo = :id_prestamo;');
-
-			$pdo2 = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare('UPDATE detalle_prestamo_x_libro SET id_libro = :id_libro WHERE id_prestamo = :id_prestamo');
-
-			$pdo3 = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare('UPDATE prestamo_x_alumno SET no_control = :no_control WHERE id_prestamo = :id_prestamo');
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("UPDATE $tablaBD SET id_prestamo = :id_prestamo, fecha_prestamo = :fecha_prestamo, fecha_devolucion = :fecha_devolucion, estado_de_volucion = :estado_de_volucion, observaciones = :observaciones WHERE id_prestamo = :id_prestamo;
+			UPDATE detalle_prestamo_x_libro SET id_libro = :id_libro WHERE id_prestamo = :id_prestamo;
+			UPDATE prestamo_x_alumno SET no_control = :no_control WHERE id_prestamo = :id_prestamo;");
 
 			
 			$pdo ->bindParam(":id_prestamo", $datosC["id_prestamo"], PDO::PARAM_INT);
@@ -58,15 +56,10 @@
 			$pdo ->bindParam(":fecha_devolucion", $datosC["fecha_devolucion"], PDO::PARAM_STR);
 			$pdo ->bindParam(":estado_de_volucion", $datosC["estado_de_volucion"], PDO::PARAM_BOOL);
 			$pdo ->bindParam(":observaciones", $datosC["observaciones"], PDO::PARAM_STR);
-
-			$pdo2 ->bindParam(":id_prestamo", $datosC["id_prestamo"], PDO::PARAM_INT);
-			$pdo2 ->bindParam(":id_libro",$datosC["id_libro"],PDO::PARAM_STR);
-
-			$pdo3 ->bindParam(":id_prestamo", $datosC["id_prestamo"], PDO::PARAM_INT);
-			$pdo3 ->bindParam(":no_control",$datosC["no_control"],PDO::PARAM_INT);
-
+			$pdo ->bindParam(":id_libro",$datosC["id_libro"],PDO::PARAM_STR);
+			$pdo ->bindParam(":no_control",$datosC["no_control"],PDO::PARAM_INT);
 			
-			if($pdo -> execute() && $pdo2 -> execute() && $pdo3 -> execute()){
+			if($pdo -> execute()){
 				return "Bien";
 			}else{
 				return "Error";
@@ -77,17 +70,10 @@
 		//BORAR PRESTAMOS
 		static public function BorrarPrestamoLibroM($datosC){
 			
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("DELETE FROM prestamo WHERE id_prestamo = :id_prestamo");
-
-			$pdo2 = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("DELETE FROM prestamo_x_alumno WHERE id_prestamo = :id_prestamo");
-
-			$pdo3 = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("DELETE FROM detalle_prestamo_x_libro WHERE id_prestamo = :id_prestamo");
-
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("DELETE FROM prestamo WHERE id_prestamo = :id_prestamo; DELETE FROM prestamo_x_alumno WHERE id_prestamo = :id_prestamo; DELETE FROM detalle_prestamo_x_libro WHERE id_prestamo = :id_prestamo" );
 			$pdo -> bindParam(":id_prestamo", $datosC, PDO::PARAM_INT);
-			$pdo2 -> bindParam(":id_prestamo", $datosC, PDO::PARAM_INT);
-			$pdo3 -> bindParam(":id_prestamo", $datosC, PDO::PARAM_INT);
 
-			if($pdo2 -> execute() && $pdo3 -> execute() && $pdo -> execute()){
+			if($pdo -> execute()){
 				return "Bien";
 			}else{
 				return "Error";
@@ -98,7 +84,7 @@
 		//RENOVAR
 		static public function RenovarPrestamoLibroM($datosC){
 			
-			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("CALL sumardias(:idprestamo)");
+			$pdo = ConexionBD::cBD($_SESSION["usuario"],$_SESSION["clave"])->prepare("CALL renovacionPrestamo( :idprestamo);");
 			$pdo -> bindParam(":idprestamo", $datosC, PDO::PARAM_INT);
 
 			if($pdo -> execute()){
